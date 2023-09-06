@@ -7,71 +7,78 @@ import {
   FlatList,
   Dimensions,
   TouchableOpacity,
+  ScrollView,
 } from "react-native";
-import FooterHeader from "../components/footer"; // Importe o componente FooterHeader
+import Footer from "../components/footer"; // Importe o componente FooterHeader
 import MediuCard from "../components/mediuCard";
 
 import LongCard from "../components/longCard";
 
 const Home = ({ navigation }) => {
-  // Array de dados fictícios para a FlatList
-  const data = [
+  const data: Item[]  = [
     {
       id: "1",
       imageSource: require("../../assets/cardmedio.png"),
       title: "Green Vines",
-      value: "$9.20",
+      value: "9.20",
     },
     {
       id: "2",
       imageSource: require("../../assets/cardmedio.png"),
       title: "Another Item",
-      value: "$12.99",
+      value: "12.99",
     },
     {
       id: "3",
       imageSource: require("../../assets/cardmedio.png"),
       title: "Yet Another Item",
-      value: "$7.50",
+      value: "7.50",
     },
     {
       id: "4",
       imageSource: require("../../assets/cardmedio.png"),
       title: "Green Vines",
-      value: "$9.20",
+      value: "9.20",
     },
     {
       id: "5",
       imageSource: require("../../assets/cardmedio.png"),
       title: "Another Item",
-      value: "$12.99",
+      value: "12.99",
     },
     {
       id: "6",
       imageSource: require("../../assets/cardmedio.png"),
       title: "Yet Another Item",
-      value: "$7.50",
+      value: "7.50",
     },
   ];
 
-  const dataLongCard = [
+  interface Item {
+    id: string;
+    imageSource: any; 
+    title: string;
+    value: string;
+  }
+
+  const dataLongCard: Item[] = [
     {
       id: "1",
       imageSource: require("../../assets/imagelongcard.png"),
       title: "Green Vines",
-      value: "$9.20",
+      value: "9.20",
     },
     {
       id: "2",
       imageSource: require("../../assets/imagelongcard.png"),
       title: "Another Item",
-      value: "$12.99",
+      value: "12.99",
     },
     {
       id: "3",
       imageSource: require("../../assets/imagelongcard.png"),
       title: "Yet Another Item",
-      value: "$7.50",
+      value: "7.50",
     },
   ];
 
@@ -79,11 +86,12 @@ const Home = ({ navigation }) => {
 
   const handleButtonClick = (button) => {
     setSelectedButton(button);
-  };
+  }; 
 
   return (
     <>
-      <View style={styles.container}>
+      <ScrollView style={styles.container}>
+
         <View style={styles.content}>
           <Text style={styles.usertext}>Hi, John</Text>
           <Image source={require("../../assets/userimage.png")} />
@@ -145,23 +153,25 @@ const Home = ({ navigation }) => {
         </View>
 
         <View style={styles.longcardlist}>
-        <FlatList
-        data={dataLongCard}
-        showsVerticalScrollIndicator={false}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <LongCard
-            imageSource={item.imageSource}
-            onAddToCart={() => console.log("adicionado ao carrinho")}
-            title={item.title}
-            value={item.value}
-          />
-        )}
-      />
+          {dataLongCard.map((item) => (
+            <LongCard
+              veiwDetails={() =>  navigation.navigate("Details", {
+                id: item.id,
+                imageSource:item.imageSource,
+                title: item.title,
+                value: item.value,
+              })}
+              key={item.id}
+              imageSource={item.imageSource}
+              onAddToCart={() => console.log("adicionado ao carrinho")}
+              title={item.title}
+              value={item.value}
+            />
+          ))}
           </View>
-      </View>
+      </ScrollView>
 
-      <FooterHeader navigation={navigation} />
+      <Footer navigation={navigation} currentPage="Home" />
     </>
   );
 };
@@ -171,7 +181,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   content: {
-    // flex: 1,
     padding: 20,
     flexDirection: "row",
     justifyContent: "space-between",
@@ -182,15 +191,15 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   cardList: {
-    paddingLeft: 10, // Adicione um espaçamento à esquerda para separar os cards
+    paddingLeft: 5, // Adicione um espaçamento à esquerda para separar os cards
   },
   cardContainer: {
-    width: Dimensions.get("window").width - 10,
+    marginHorizontal: 10,
   },
   flatlistVerticalText: {
     fontSize: 20,
     fontWeight: "bold",
-    paddingHorizontal: 10,
+    paddingHorizontal: 20,
   },
   flatlisthorizontalText: {
     fontSize: 20,

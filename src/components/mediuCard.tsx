@@ -28,23 +28,23 @@ const MediuCard = ({ imageSource, title, value, onAddToCart }) => {
       <TouchableOpacity
         style={[
           styles.heartButton,
-          isHeartClicked && styles.heartButtonClicked, // Aplica o estilo de botão clicado se isHeartClicked for verdadeiro
+          isHeartClicked && styles.heartButtonClicked, 
         ]}
         onPress={handleHeartClick}
       >
-        {/* Use o componente Ionicons para o ícone de coração */}
+        
         <Ionicons name={heartIconName} size={20} color={isHeartClicked ? "green" : "black"} />
       </TouchableOpacity>
 
-      {/* Conteúdo à direita */}
+      
       <View style={styles.content}>
-        {/* Título */}
+        
         <Text style={styles.title}>{title}</Text>
 
-        {/* Valor */}
+        
         <Text style={styles.value}>${value}</Text>
 
-        {/* Botão "Add to Cart" */}
+       
         <TouchableOpacity onPress={onAddToCart} style={styles.button}>
           <Text style={styles.buttonText}>Add to Cart</Text>
         </TouchableOpacity>
@@ -58,7 +58,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     height: 120,
-    width: "70%",
+    width: "100%",
+    margin: 10,
     backgroundColor: "#fff",
     borderRadius: 8,
     marginBottom: 16,
@@ -120,6 +121,7 @@ const styles = StyleSheet.create({
     width: 100,
     height: "100%",
     marginRight: 10,
+    borderRadius: 8,
   },
   content: {
     flex: 1,
@@ -134,6 +136,7 @@ const styles = StyleSheet.create({
   },
   button: {
     marginTop: 8,
+    marginLeft: 20,
     backgroundColor: "#418B64",
     borderRadius: 4,
     width: "70%",

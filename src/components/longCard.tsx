@@ -2,57 +2,43 @@ import React, { useState } from "react";
 import { View, Text, Image, TouchableOpacity, StyleSheet, Platform } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
-const LongCard = ({ imageSource, title, value, onAddToCart }) => {
+const LongCardButton = ({ imageSource, title, value, onAddToCart, veiwDetails }) => {
+  const [isHeartClicked, setIsHeartClicked] = useState(false);
 
+  const handleHeartClick = () => {
+    setIsHeartClicked(!isHeartClicked);
+  };
 
-// Estado local para controlar se o botão de coração foi clicado
-const [isHeartClicked, setIsHeartClicked] = useState(false);
-
-// Função para lidar com o clique no botão de coração
-const handleHeartClick = () => {
-  // Inverte o estado atual
-  setIsHeartClicked(!isHeartClicked);
-};
-
-// Nome do ícone com base no estado isHeartClicked
-const heartIconName = isHeartClicked ? "heart" : "heart-outline";
+  const heartIconName = isHeartClicked ? "heart" : "heart-outline";
 
   return (
-    <View style={styles.card}>
-
-
-      {/* Imagem que cobre quase 70% do cartão */}
+    <TouchableOpacity
+      style={styles.card}
+      onPress={veiwDetails} 
+      // Adicione a função de retorno de chamada onPress aqui
+    >
       <Image source={imageSource} style={styles.image} />
 
       <TouchableOpacity
         style={[
           styles.heartButton,
-          isHeartClicked && styles.heartButtonClicked, // Aplica o estilo de botão clicado se isHeartClicked for verdadeiro
+          isHeartClicked && styles.heartButtonClicked,
         ]}
         onPress={handleHeartClick}
       >
-        {/* Use o componente Ionicons para o ícone de coração */}
-        <Ionicons name={heartIconName} size={20} color={isHeartClicked ? "green" : "black"} />
+        <Ionicons name={heartIconName} size={20} color={isHeartClicked ? "#418B64" : "black"} />
       </TouchableOpacity>
 
-      {/* Conteúdo abaixo da imagem */}
       <View style={styles.content}>
         <View>
-        {/* Título */}
-        <Text style={styles.title}>{title}</Text>
-
-        {/* Valor */}
-        <Text style={styles.value}>${value}</Text>
-
+          <Text style={styles.title}>{title}</Text>
+          <Text style={styles.value}>${value}</Text>
         </View>
-        {/* Botão "Add to Cart" */}
-        <TouchableOpacity onPress={onAddToCart} style={styles.cartButton}>
-          {/* <image name="cart-outline" size={20} color="white" /> */}
+        <TouchableOpacity style={styles.cartButton} onPress={veiwDetails}>
           <Image source={require("../../assets/shoppingBag.png")} />
         </TouchableOpacity>
-
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
@@ -67,7 +53,6 @@ const styles = StyleSheet.create({
     marginTop: 20,
     overflow: "hidden",
     position: "relative",
-
   },
   favoriteButton: {
     position: "absolute",
@@ -79,7 +64,7 @@ const styles = StyleSheet.create({
   image: {
     width: "100%",
     aspectRatio: 1.5,
-    resizeMode: "cover", // Controla a proporção da imagem (ajuste conforme necessário)
+    resizeMode: "cover",
   },
   content: {
     padding: 16,
@@ -90,12 +75,10 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 18,
     fontWeight: "bold",
-    // marginBottom: 8,
   },
   value: {
     fontSize: 16,
     color: "#666",
-    // marginBottom: 8,
   },
   cartButton: {
     backgroundColor: "#418B64",
@@ -116,31 +99,31 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     ...Platform.select({
-        ios: {
-          shadowColor: "black",
-          shadowOffset: { width: 0, height: 2 },
-          shadowOpacity: 0.25,
-          shadowRadius: 4,
-        },
-        android: {
-          elevation: 3,
-        },
-      }),
+      ios: {
+        shadowColor: "black",
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+      },
+      android: {
+        elevation: 3,
+      },
+    }),
   },
   heartButtonClicked: { 
     backgroundColor: "white", 
     ...Platform.select({
-        ios: {
-          shadowColor: "black",
-          shadowOffset: { width: 0, height: 2 },
-          shadowOpacity: 0.25,
-          shadowRadius: 4,
-        },
-        android: {
-          elevation: 3,
-        },
-      }),
+      ios: {
+        shadowColor: "black",
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+      },
+      android: {
+        elevation: 3,
+      },
+    }),
   },
 });
 
-export default LongCard;
+export default LongCardButton;

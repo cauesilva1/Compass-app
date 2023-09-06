@@ -5,8 +5,7 @@ import Home from "../pages/home";
 import FavoritePage from "../pages/favoritePage";
 import Details from "../pages/detailsPage";
 import CartPage from "../pages/cartPage";
-import FooterHeader from "../components/footer";
-
+import { Colors } from "react-native/Libraries/NewAppScreen";
 export type RootStackParamList = {
   Home: undefined;
   InicialPage: undefined;
@@ -19,7 +18,7 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function StackNavigation() {
   return (
-    <Stack.Navigator initialRouteName="InicialPage">
+    <Stack.Navigator initialRouteName="InicialPage" screenOptions={{contentStyle: { backgroundColor: Colors.white }}}>
       <Stack.Screen
         name="InicialPage"
         component={InicialPage}
@@ -30,14 +29,21 @@ function StackNavigation() {
         component={Home}
         options={{ headerShown: false }}
       />
-      <Stack.Screen name="Details" component={Details} />
       <Stack.Screen
         name="Cart"
         component={CartPage}
+        options={{ headerShown: false }}
+
       />
       <Stack.Screen
         name="Favorite"
         component={FavoritePage}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Details"
+        component={Details}
+        options={{ headerShown: false }}
       />
     </Stack.Navigator>
   );

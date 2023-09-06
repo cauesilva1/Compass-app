@@ -1,17 +1,21 @@
+import { Ionicons } from "@expo/vector-icons";
 import React from "react";
 import { View, TouchableOpacity, Text, StyleSheet } from "react-native";
 
-const FooterHeader = ({ navigation }) => {
+const Footer = ({ navigation, currentPage }) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={() => navigation.navigate("Home")} style={styles.option}>
-        <Text>Home</Text>
+        <Ionicons name="home-outline" size={20} color={currentPage === "Home" ? "#418B64" : "#000000"} />
+        <Text style={{ color: currentPage === "Home" ? "#418B64" : "#000000" }}>Home</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate("Favorite")} style={styles.option}>
-        <Text>Favorite</Text>
+        <Ionicons name="heart-outline" size={20} color={currentPage === "Favorite" ? "#418B64" : "#000000"} />
+        <Text style={{ color: currentPage === "Favorite" ? "#418B64" : "#000000" }}>Favorite</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate("Cart")} style={styles.option}>
-        <Text>Cart</Text>
+        <Ionicons name="cart-outline" size={20} color={currentPage === "Cart" ? "#418B64" : "#000000"} />
+        <Text style={{ color: currentPage === "Cart" ? "#418B64" : "#000000" }}>Cart</Text>
       </TouchableOpacity>
     </View>
   );
@@ -22,7 +26,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    backgroundColor: "#eee",
+    backgroundColor: "#FFFFFF",
     padding: 10,
   },
   option: {
@@ -32,4 +36,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default FooterHeader;
+export default Footer;
