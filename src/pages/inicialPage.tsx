@@ -19,12 +19,12 @@ export default function InicialPage({ navigation }: { navigation: any }) {
         <View style={styles.HeaderButtons}>
 
         <ButtonComponent 
-        onPress={() => navigation.navigate("Home")}
+        onPress={() => navigation.navigate("LoginPage")}
         text={"Sign In"}
         />
 
         <ButtonComponent 
-        onPress={() => console.log("teste2")}
+        onPress={() => navigation.navigate("RegisterPage")}
         text={"Sign Up"}
         />
 

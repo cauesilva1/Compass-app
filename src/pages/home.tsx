@@ -15,6 +15,7 @@ import MediuCard from "../components/mediuCard";
 import LongCard from "../components/longCard";
 
 const Home = ({ navigation }) => {
+  
   const data: Item[]  = [
     {
       id: "1",
@@ -172,6 +173,7 @@ const Home = ({ navigation }) => {
       </ScrollView>
 
       <Footer navigation={navigation} currentPage="Home" />
+
     </>
   );
 };

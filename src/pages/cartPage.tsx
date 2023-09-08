@@ -6,10 +6,10 @@ import { useRoute } from "@react-navigation/native";
 
 interface CartItem {
   id: string;
-  imageSource: any; // Substitua "any" pelo tipo apropriado para sua imagem
+  imageSource: any; 
   title: string;
   value: string;
-  quantity: string; // Adicione o tipo para a quantidade
+  quantity: string; 
 }
 
 export default function CartPage({ navigation }) {

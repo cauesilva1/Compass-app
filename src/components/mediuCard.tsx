@@ -33,7 +33,7 @@ const MediuCard = ({ imageSource, title, value, onAddToCart }) => {
         onPress={handleHeartClick}
       >
         
-        <Ionicons name={heartIconName} size={20} color={isHeartClicked ? "green" : "black"} />
+        <Ionicons name={heartIconName} size={20} color={isHeartClicked ? "#418B64" : "black"} />
       </TouchableOpacity>
 
       
