@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { View, Text, Image, TouchableOpacity, StyleSheet, Platform } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
-const CardCart = ({ imageSource, title, value, quantity }) => {
-  const [cardQuantity, setCardQuantity] = useState(quantity);
+const CardCart = ({ imageSource, title, value, quantity, onremove, id }) => {
+  const [cardQuantity, setCardQuantity] = useState( Number(quantity));
   const [showTrashButton, setShowTrashButton] = useState(quantity === 1);
 
   const handleIncrease = () => {
@@ -19,11 +19,6 @@ const CardCart = ({ imageSource, title, value, quantity }) => {
     }
   };
 
-  const handleDelete = () => {
-    // Implemente aqui a lógica para excluir o card
-    // Isso pode envolver a remoção do card da lista de cards ou outra ação apropriada
-    console.log("Card excluído");
-  };
 
   return (
     <View style={styles.container}>
@@ -31,12 +26,12 @@ const CardCart = ({ imageSource, title, value, quantity }) => {
 
       <View style={styles.textContainer}>
         <Text style={styles.title}>{title}</Text>
-        <Text style={styles.value}>{value}</Text>
+        <Text style={styles.value}>R$ {value}</Text>
       </View>
 
       <View style={styles.buttonContainer}>
         {showTrashButton ? (
-          <TouchableOpacity style={styles.trashButton} onPress={handleDelete}>
+          <TouchableOpacity style={styles.trashButton} onPress={() => onremove(id)}>
             <Ionicons name="trash-outline" size={20} color="red" />
           </TouchableOpacity>
         ) : (

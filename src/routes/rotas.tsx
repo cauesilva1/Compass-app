@@ -8,6 +8,8 @@ import CartPage from "../pages/cartPage";
 import { Colors } from "react-native/Libraries/NewAppScreen";
 import LoginPage from "../pages/LoginPage";
 import RegisterPage from "../pages/registerPage";
+import UserProfile from "../pages/userPage";
+import CartProvider from "../context/cart";
 
 
 
@@ -19,15 +21,17 @@ export type RootStackParamList = {
   Favorite: undefined;
   LoginPage: undefined;
   RegisterPage: undefined;
+  UserProfile: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function StackNavigation() {
+
+  
+
   return (
     <>
-
-    
 
       <Stack.Navigator
         initialRouteName="InicialPage"
@@ -68,28 +72,16 @@ function StackNavigation() {
           component={RegisterPage}
           options={{ headerShown: false }}
         />
+        <Stack.Screen
+          name="UserProfile"
+          component={UserProfile}
+          // options={{ headerShown: false }}
+        />
+        
       </Stack.Navigator>
+
     </>
   );
 }
 
 export default StackNavigation;
-
-
-
-// headerShown: false,
-// tabBarStyle: {
-//   display: 'flex',
-//   width: '100%',
-//   height: 84,
-//   left: -1,
-//   paddingTop: 0,
-//   paddingRight: 0,
-//   paddingBottom: 0.549,
-//   paddingLeft: 0.805,
-//   justifyContent: 'center',
-//   alignItems: 'center',
-//   flexShrink: 0,
-//   backgroundColor: "#FFFFFF",
-// },
-// tabBarActiveTintColor: "#418B64",

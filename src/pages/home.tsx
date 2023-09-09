@@ -95,7 +95,12 @@ const Home = ({ navigation }) => {
 
         <View style={styles.content}>
           <Text style={styles.usertext}>Hi, John</Text>
-          <Image source={require("../../assets/userimage.png")} />
+
+          <TouchableOpacity 
+            onPress={() => navigation.navigate("UserProfile")}
+          >
+            <Image source={require("../../assets/userimage.png")} />
+          </TouchableOpacity>
         </View>
 
         <View style={styles.flatlistVerticalText}>

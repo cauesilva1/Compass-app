@@ -5,6 +5,7 @@ import { useFonts } from "expo-font";
 import { NavigationContainer } from "@react-navigation/native";
 import StackNavigation from "./src/routes/rotas";
 import colors from "./colors/colors";
+import CartProvider from "./src/context/cart";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -19,9 +20,13 @@ export default function App() {
     <>
       <StatusBar />
 
-      <NavigationContainer>
-        <StackNavigation />
-      </NavigationContainer>
+      <CartProvider>
+
+        <NavigationContainer>
+          <StackNavigation />
+        </NavigationContainer>
+
+      </CartProvider>
 
     </>
   );
