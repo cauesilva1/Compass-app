@@ -1,19 +1,25 @@
 import React, { useState } from "react";
 import { View, Text, Image, TouchableOpacity, StyleSheet, Platform } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { useCart } from "../context/cart";
 
-const CardCart = ({ imageSource, title, value, quantity, onremove, id }) => {
+const CardCart = ({ imageSource, title, value, quantity, onremove, id,  }) => {
   const [cardQuantity, setCardQuantity] = useState( Number(quantity));
   const [showTrashButton, setShowTrashButton] = useState(quantity === 1);
 
+  const { cartItems, addCart, addCarts, deletItem, putquantity} = useCart();
+
   const handleIncrease = () => {
     setCardQuantity(cardQuantity + 1);
+    putquantity(id, cardQuantity + 1);
+
     setShowTrashButton(false);
   };
 
   const handleDecrease = () => {
     if (cardQuantity > 1) {
       setCardQuantity(cardQuantity - 1);
+      putquantity(id, cardQuantity - 1);
     } else {
       setShowTrashButton(true);
     }
@@ -43,7 +49,7 @@ const CardCart = ({ imageSource, title, value, quantity, onremove, id }) => {
         <Text style={styles.quantityText}>{cardQuantity}</Text>
 
         <TouchableOpacity style={styles.actionButton} onPress={handleIncrease}>
-          <Ionicons name="add-outline" size={20} color="white" />
+          <Ionicons name="add-outline" size={20} color="white" onPress={handleIncrease}/>
         </TouchableOpacity>
       </View>
     </View>

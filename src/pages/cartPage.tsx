@@ -17,7 +17,7 @@ export interface CartItem {
 export default function CartPage({ navigation }) {
 
   // const [cartItems, setCartItems] = useState<CartItem[]>([]);
-  const { cartItems, addCart, addCarts, deletItem } = useCart();
+  const { cartItems, addCart, addCarts, deletItem, putquantity} = useCart();
 
   const route = useRoute();
 
@@ -61,7 +61,6 @@ export default function CartPage({ navigation }) {
   const removeFromCart = (id: any) => {
     deletItem(id);
   };
-
 
   const showToastsuccess = () => {
     Toast.show({
