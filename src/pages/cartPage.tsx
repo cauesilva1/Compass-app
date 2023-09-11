@@ -12,12 +12,11 @@ export interface CartItem {
   title: string;
   value: string;
   quantity: string; 
-}
+} 
 
 export default function CartPage({ navigation }) {
 
-  // const [cartItems, setCartItems] = useState<CartItem[]>([]);
-  const { cartItems, addCart, addCarts, deletItem, putquantity} = useCart();
+  const { cartItems, addCart, addCarts, deletItem} = useCart();
 
   const route = useRoute();
 

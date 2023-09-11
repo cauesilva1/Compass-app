@@ -1,17 +1,20 @@
 import React, { useState } from "react";
 import { View, Text, Image, TouchableOpacity, StyleSheet, Platform } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { useFavorite } from "../context/favorite";
+ 
 
-const StickCard = ({ imageSource, title, value, isFavorite }) => {
+const StickCard = ({id, imageSource, title, value, isFavorite }) => {
   const [isHeartClicked, setIsHeartClicked] = useState(false);
 
+  const {favoriteItems, addFavorite, deletefavorite} = useFavorite();
+
   const handleHeartClick = () => {
-    setIsHeartClicked(!isHeartClicked);
+    
+    deletefavorite(id);
   };
 
-  const heartIconName = isHeartClicked ? "heart" : "heart-outline";
-
-  return (
+  return ( 
     <View style={styles.container}>
       <Image source={imageSource} style={styles.image} />
 
@@ -21,6 +24,7 @@ const StickCard = ({ imageSource, title, value, isFavorite }) => {
       </View>
     
         <View style={styles.buttonFavorite}>
+
       {/* Botão de coração */}
       <TouchableOpacity
         style={[
@@ -30,8 +34,9 @@ const StickCard = ({ imageSource, title, value, isFavorite }) => {
         onPress={handleHeartClick}
       >
         {/* Use o componente Ionicons para o ícone de coração */}
-        <Ionicons name={heartIconName} size={20} color={isHeartClicked ? "#418B64" : "black"} />
+        <Ionicons name={"heart"} size={20} color={ "#418B64"} />
       </TouchableOpacity>
+
       </View>
     </View>
   );

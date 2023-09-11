@@ -10,7 +10,8 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useRoute } from "@react-navigation/native";
-import CartPage from "./cartPage";
+import { useFavorite } from "../context/favorite";
+
 
 interface Item {
   id: string;
@@ -25,6 +26,27 @@ const Details = ({ navigation }) => {
 
   const route = useRoute();
   const { id, imageSource, title, value } = route.params as Item;
+
+  const {favoriteItems, addFavorite, deletefavorite} = useFavorite();
+
+  const handleHeartClick = () => {
+
+    // Inverte o estado atual
+    setIsHeartClicked(!isHeartClicked); 
+
+    const item = {
+      id,
+      imageSource,
+      title,
+      value,
+    };
+    addFavorite(item);
+
+    if (isHeartClicked) {
+      deletefavorite(id);
+    }
+    
+  };
 
   const handleAddToCart = () => {
     const item = {
@@ -45,12 +67,6 @@ const Details = ({ navigation }) => {
 
   const handleIncreaseQuantity = () => {
     setQuantity(quantity + 1);
-  };
-
-  // Função para lidar com o clique no botão de coração
-  const handleHeartClick = () => {
-    // Inverte o estado atual
-    setIsHeartClicked(!isHeartClicked);
   };
 
   // Nome do ícone com base no estado isHeartClicked

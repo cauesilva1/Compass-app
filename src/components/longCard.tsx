@@ -1,14 +1,32 @@
 import React, { useState } from "react";
 import { View, Text, Image, TouchableOpacity, StyleSheet, Platform } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { useFavorite } from "../context/favorite";
 
-const LongCardButton = ({ imageSource, title, value, onAddToCart, veiwDetails }) => {
+const LongCardButton = ({ imageSource,id, title, value, onAddToCart, veiwDetails }) => {
   const [isHeartClicked, setIsHeartClicked] = useState(false);
 
-  const handleHeartClick = () => {
-    setIsHeartClicked(!isHeartClicked);
-  };
+  const {favoriteItems, addFavorite, deletefavorite} = useFavorite();
 
+  const handleHeartClick = () => {
+
+    // Inverte o estado atual
+    setIsHeartClicked(!isHeartClicked); 
+
+    const item = {
+      id,
+      imageSource,
+      title,
+      value,
+    };
+    addFavorite(item);
+
+    if (isHeartClicked) {
+      deletefavorite(id);
+    }
+    
+  };
+ 
   const heartIconName = isHeartClicked ? "heart" : "heart-outline";
 
   return (

@@ -13,9 +13,10 @@ import Footer from "../components/footer"; // Importe o componente FooterHeader
 import MediuCard from "../components/mediuCard";
 
 import LongCard from "../components/longCard";
+import { useRoute } from "@react-navigation/native";
 
 const Home = ({ navigation }) => {
-  
+
   const data: Item[]  = [
     {
       id: "1",
@@ -84,6 +85,7 @@ const Home = ({ navigation }) => {
   ];
 
   const [selectedButton, setSelectedButton] = useState("All");
+  
 
   const handleButtonClick = (button) => {
     setSelectedButton(button);
@@ -115,10 +117,13 @@ const Home = ({ navigation }) => {
             renderItem={({ item }) => (
               <View style={styles.cardContainer}>
                 <MediuCard
+                  id={item.id}
                   imageSource={item.imageSource}
                   title={item.title}
                   value={item.value}
                   onAddToCart={() => console.log("adicionado ao carrinho")}
+                  navigation={navigation}
+
                 />
               </View>
             )}
@@ -172,6 +177,7 @@ const Home = ({ navigation }) => {
               onAddToCart={() => console.log("adicionado ao carrinho")}
               title={item.title}
               value={item.value}
+              id={item.id}
             />
           ))}
           </View>

@@ -1,18 +1,40 @@
 import React, { useState } from "react";
 import { View, Text, Image, TouchableOpacity, StyleSheet, Platform } from "react-native";
 import { Ionicons } from "@expo/vector-icons"; // Importe o ícone desejado aqui
+import { useFavorite } from "../context/favorite";
+import { FavoriteItems } from "../pages/favoritePage";
+ 
 
-const MediuCard = ({ imageSource, title, value, onAddToCart }) => {
+const MediuCard = ({ navigation, id, imageSource, title, value, onAddToCart }) => {
   const isIOS = Platform.OS === "ios";
 
   // Estado local para controlar se o botão de coração foi clicado
-  const [isHeartClicked, setIsHeartClicked] = useState(false);
+  const [isHeartClicked, setIsHeartClicked] = useState(false); 
+
+  const {favoriteItems, addFavorite, deletefavorite} = useFavorite();
+
 
   // Função para lidar com o clique no botão de coração
   const handleHeartClick = () => {
+
     // Inverte o estado atual
-    setIsHeartClicked(!isHeartClicked);
+    setIsHeartClicked(!isHeartClicked); 
+
+    const item = {
+      id,
+      imageSource,
+      title,
+      value,
+    };
+    addFavorite(item);
+
+    if (isHeartClicked) {
+      deletefavorite(id);
+    }
+    
   };
+
+  
 
   // Nome do ícone com base no estado isHeartClicked
   const heartIconName = isHeartClicked ? "heart" : "heart-outline";

@@ -3,8 +3,23 @@ import { View, Text, StyleSheet, SafeAreaView, ScrollView } from "react-native";
 import Footer from "../components/footer";
 
 import StickCard from "../components/stickCard";
+import { useFavorite } from "../context/favorite";
+
+
+export interface FavoriteItems {
+  id: string;
+  imageSource: any; 
+  title: string;
+  value: string;
+  quantity: string; 
+  favorite: boolean
+} 
+
 
 export default function FavoritePage({ navigation }) {
+
+  const {favoriteItems, addFavorite, deletefavorite} = useFavorite();
+
   return (
     <>
     <ScrollView style={{ flex: 1 }}>
@@ -15,16 +30,19 @@ export default function FavoritePage({ navigation }) {
 
       <View style={styles.contentContainer}>
 
-        <StickCard imageSource={require("../../assets/cardpequeno.png")} title={"Green Vines"} value={"$9.20"} isFavorite={true} />
+        {/* Adicione os itens favoritos aqui */}
 
-        <StickCard imageSource={require("../../assets/cardpequeno.png")} title={"Green Vines"} value={"$9.20"} isFavorite={true} />
-
-        <StickCard imageSource={require("../../assets/cardpequeno.png")} title={"Green Vines"} value={"$9.20"} isFavorite={true} />
-
-        <StickCard imageSource={require("../../assets/cardpequeno.png")} title={"Green Vines"} value={"$9.20"} isFavorite={true} />
-
-
-
+        {favoriteItems.map((item, index) => (
+            <StickCard
+              id={item.id}
+              key={index}
+              imageSource={item.imageSource}
+              title={item.title}
+              value={item.value}
+              isFavorite={item.favorite}
+            />
+          ))}
+       
       </View>
     </ScrollView>
     
