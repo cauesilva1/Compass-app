@@ -5,7 +5,7 @@ import { useFavorite } from "../context/favorite";
 import { FavoriteItems } from "../pages/favoritePage";
  
 
-const MediuCard = ({ navigation, id, imageSource, title, value, onAddToCart }) => {
+const MediuCard = ({ navigation, id, imageSource, title, value, veiwDetails }) => {
   const isIOS = Platform.OS === "ios";
 
   // Estado local para controlar se o botão de coração foi clicado
@@ -40,10 +40,10 @@ const MediuCard = ({ navigation, id, imageSource, title, value, onAddToCart }) =
   const heartIconName = isHeartClicked ? "heart" : "heart-outline";
 
   return (
-    <View style={[styles.card, isIOS && styles.iosShadow]}>
+    <TouchableOpacity style={[styles.card, isIOS && styles.iosShadow]} onPress={veiwDetails} >
 
       {/* Imagem à esquerda */}
-      <Image source={imageSource} style={styles.image} />
+      <Image source={{ uri: imageSource }} style={styles.image} />
 
 
       {/* Botão de coração */}
@@ -67,11 +67,11 @@ const MediuCard = ({ navigation, id, imageSource, title, value, onAddToCart }) =
         <Text style={styles.value}>${value}</Text>
 
        
-        <TouchableOpacity onPress={onAddToCart} style={styles.button}>
+        <TouchableOpacity onPress={veiwDetails} style={styles.button}>
           <Text style={styles.buttonText}>Add to Cart</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 

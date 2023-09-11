@@ -59,6 +59,12 @@ export default function RegisterPage({ navigation }: { navigation: any }) {
             placeholder="Digite uma senha..."
           />
 
+          <TextInput
+            style={styles.TextInput}
+            secureTextEntry
+            placeholder="Confirme sua senha ..."
+          />
+
           <ButtonComponent
             onPress={Register}
             text={"register"}
@@ -89,6 +95,7 @@ const styles = StyleSheet.create({
   },
 
   TextInput: {
+    paddingLeft: 10,
     borderWidth: 1,
     padding: 2,
     width: 250,

@@ -35,7 +35,7 @@ const LongCardButton = ({ imageSource,id, title, value, onAddToCart, veiwDetails
       onPress={veiwDetails} 
       // Adicione a função de retorno de chamada onPress aqui
     >
-      <Image source={imageSource} style={styles.image} />
+      <Image source={{ uri: imageSource }} style={styles.image} />
 
       <TouchableOpacity
         style={[

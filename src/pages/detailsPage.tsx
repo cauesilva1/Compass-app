@@ -18,6 +18,8 @@ interface Item {
   imageSource: any; // Substitua "any" pelo tipo apropriado para sua imagem
   title: string;
   value: string;
+  category: string;
+  description: string;
 }
 
 const Details = ({ navigation }) => {
@@ -25,7 +27,7 @@ const Details = ({ navigation }) => {
   const [isHeartClicked, setIsHeartClicked] = useState(false);
 
   const route = useRoute();
-  const { id, imageSource, title, value } = route.params as Item;
+  const { id, imageSource, title, value, category, description, } = route.params as Item;
 
   const {favoriteItems, addFavorite, deletefavorite} = useFavorite();
 
@@ -54,7 +56,7 @@ const Details = ({ navigation }) => {
       imageSource,
       title,
       value,
-      quantity: quantity.toString(), // Converta para string antes de adicionar ao carrinho
+      quantity: quantity.toString(),
     };
     navigation.navigate("Cart", { cartItems: [item] });
   };
@@ -100,13 +102,13 @@ const Details = ({ navigation }) => {
 
         {/* Imagem do produto */}
         <Image
-          source={imageSource}
+          source={{ uri: imageSource }}
           style={styles.productImage}
           resizeMode="cover"
         />
 
         <View style={styles.textproduct}>
-          <Text style={styles.productName2}>{title}</Text>
+          <Text style={styles.productName2}>{category}</Text>
 
           {/* Nome do produto */}
           <Text style={styles.productName}>{title}</Text>
@@ -133,18 +135,7 @@ const Details = ({ navigation }) => {
 
         <View style={styles.productDescriptioncentrilize}>
           <Text style={styles.productDescription}>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore
-            praesentium exercitationem voluptate minus alias. Voluptatem
-            voluptatum alias quod culpa nam suscipit, quas dicta at sunt quaerat
-            perspiciatis doloribus praesentium repellendus?.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore
-            praesentium exercitationem voluptate minus alias. Voluptatem
-            voluptatum alias quod culpa nam suscipit, quas dicta at sunt quaerat
-            perspiciatis doloribus praesentium repellendus?.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore
-            praesentium exercitationem voluptate minus alias. Voluptatem
-            voluptatum alias quod culpa nam suscipit, quas dicta at sunt quaerat
-            perspiciatis doloribus praesentium repellendus?.
+            {description}
           </Text>
         </View>
       </ScrollView>

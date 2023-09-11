@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -17,90 +17,63 @@ import { useRoute } from "@react-navigation/native";
 
 const Home = ({ navigation }) => {
 
-  const data: Item[]  = [
-    {
-      id: "1",
-      imageSource: require("../../assets/cardmedio.png"),
-      title: "Green Vines",
-      value: "9.20",
-    },
-    {
-      id: "2",
-      imageSource: require("../../assets/cardmedio.png"),
-      title: "Another Item",
-      value: "12.99",
-    },
-    {
-      id: "3",
-      imageSource: require("../../assets/cardmedio.png"),
-      title: "Yet Another Item",
-      value: "7.50",
-    },
-    {
-      id: "4",
-      imageSource: require("../../assets/cardmedio.png"),
-      title: "Green Vines",
-      value: "9.20",
-    },
-    {
-      id: "5",
-      imageSource: require("../../assets/cardmedio.png"),
-      title: "Another Item",
-      value: "12.99",
-    },
-    {
-      id: "6",
-      imageSource: require("../../assets/cardmedio.png"),
-      title: "Yet Another Item",
-      value: "7.50",
-    },
-  ];
-
   interface Item {
+    description: any;
+    category: string;
+    price: any;
+    image: any;
     id: string;
-    imageSource: any; 
+    imageSource: any;
     title: string;
-    value: string;
   }
 
-  const dataLongCard: Item[] = [
-    {
-      id: "1",
-      imageSource: require("../../assets/imagelongcard.png"),
-      title: "Green Vines",
-      value: "9.20",
-    },
-    {
-      id: "2",
-      imageSource: require("../../assets/imagelongcard.png"),
-      title: "Another Item",
-      value: "12.99",
-    },
-    {
-      id: "3",
-      imageSource: require("../../assets/imagelongcard.png"),
-      title: "Yet Another Item",
-      value: "7.50",
-    },
-  ];
+  const [data, setData] = useState<Item[]>([]); 
 
-  const [selectedButton, setSelectedButton] = useState("All");
-  
 
-  const handleButtonClick = (button) => {
-    setSelectedButton(button);
-  }; 
+  const [selectedCategory, setSelectedCategory] = useState("All");
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          "https://8jcox47hg2.execute-api.us-east-2.amazonaws.com/dev/"
+        );
+        if (response.status === 200) {
+          const responseData = await response.json();
+          const items = responseData.body.data.items;
+          if (Array.isArray(items)) {
+            setData(items);
+          } else {
+            console.error("Os dados da API não estão no formato esperado.");
+          }
+        } else {
+          console.error(
+            "A requisição não foi bem-sucedida. Código de status:",
+            response.status
+          );
+        }
+      } catch (error) {
+        console.error("Erro ao fazer a requisição:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const handleButtonClickcategory = (category) => {
+    setSelectedCategory(category);
+  };
+
+
 
   return (
     <>
       <ScrollView style={styles.container}>
-
         <View style={styles.content}>
           <Text style={styles.usertext}>Hi, John</Text>
 
-          <TouchableOpacity 
-            onPress={() => navigation.navigate("UserProfile")}
-          >
+          <TouchableOpacity onPress={() => navigation.navigate("UserProfile")}>
             <Image source={require("../../assets/userimage.png")} />
           </TouchableOpacity>
         </View>
@@ -112,79 +85,114 @@ const Home = ({ navigation }) => {
             horizontal
             showsHorizontalScrollIndicator={false}
             data={data}
-            keyExtractor={(item) => item.id}
+            keyExtractor={(item) => item.id.toString()}
             contentContainerStyle={styles.cardList}
             renderItem={({ item }) => (
               <View style={styles.cardContainer}>
                 <MediuCard
+                  veiwDetails={() =>
+                    navigation.navigate("Details", {
+                      id: item.id,
+                      imageSource: item.image,
+                      title: item.title,
+                      value: item.price,
+                      category: item.category,
+                      description: item.description,
+                    })
+                  }
                   id={item.id}
-                  imageSource={item.imageSource}
+                  imageSource={item.image}
                   title={item.title}
-                  value={item.value}
-                  onAddToCart={() => console.log("adicionado ao carrinho")}
+                  value={item.price}
                   navigation={navigation}
-
                 />
               </View>
             )}
           />
         </View>
 
-        <View>
         <View style={styles.buttonGroup}>
-        <TouchableOpacity
-          onPress={() => handleButtonClick("All")}
-          style={[
-            styles.button,
-            selectedButton === "All" && styles.selectedButton,
-          ]}
-        >
-          <Text style={[styles.buttonText, selectedButton === "All" && styles.selectedButtonText]}>All</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => handleButtonClick("Indoor")}
-          style={[
-            styles.button,
-            selectedButton === "Indoor" && styles.selectedButton,
-          ]}
-        >
-          <Text style={[styles.buttonText, selectedButton === "Indoor" && styles.selectedButtonText]}>Indoor</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => handleButtonClick("Outdoor")}
-          style={[
-            styles.button,
-            selectedButton === "Outdoor" && styles.selectedButton,
-          ]}
-        >
-          <Text style={[styles.buttonText, selectedButton === "Outdoor" && styles.selectedButtonText]}>Outdoor</Text>
-        </TouchableOpacity>
-        </View>
-
+          <TouchableOpacity
+            onPress={() => handleButtonClickcategory("All")}
+            style={[
+              styles.button,
+              selectedCategory === "All" && styles.selectedButton,
+            ]}
+          >
+            <Text
+              style={[
+                styles.buttonText,
+                selectedCategory === "All" && styles.selectedButtonText,
+              ]}
+            >
+              All
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => handleButtonClickcategory("Indoor")}
+            style={[
+              styles.button,
+              selectedCategory === "Indoor" && styles.selectedButton,
+            ]}
+          >
+            <Text
+              style={[
+                styles.buttonText,
+                selectedCategory === "Indoor" && styles.selectedButtonText,
+              ]}
+            >
+              Indoor
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => handleButtonClickcategory("Outdoor")}
+            style={[
+              styles.button,
+              selectedCategory === "Outdoor" && styles.selectedButton,
+            ]}
+          >
+            <Text
+              style={[
+                styles.buttonText,
+                selectedCategory === "Outdoor" && styles.selectedButtonText,
+              ]}
+            >
+              Outdoor
+            </Text>
+          </TouchableOpacity>
         </View>
 
         <View style={styles.longcardlist}>
-          {dataLongCard.map((item) => (
-            <LongCard
-              veiwDetails={() =>  navigation.navigate("Details", {
-                id: item.id,
-                imageSource:item.imageSource,
-                title: item.title,
-                value: item.value,
-              })}
-              key={item.id}
-              imageSource={item.imageSource}
-              onAddToCart={() => console.log("adicionado ao carrinho")}
-              title={item.title}
-              value={item.value}
-              id={item.id}
-            />
-          ))}
-          </View>
+          {data
+            .filter((item) =>
+              selectedCategory === "All"
+                ? true
+                : item.category === selectedCategory
+            )
+            .map((item) => (
+              <LongCard
+                veiwDetails={() =>
+                  navigation.navigate("Details", {
+                    id: item.id,
+                    imageSource: item.image,
+                    title: item.title,
+                    value: item.price,
+                    category: item.category,
+                    description: item.description,
+                  })
+                }
+                key={item.id}
+                imageSource={item.image}
+                onAddToCart={() => console.log("adicionado ao carrinho")}
+                title={item.title}
+                value={item.price}
+                id={item.id}
+              />
+            ))}
+        </View>
       </ScrollView>
 
       <Footer navigation={navigation} currentPage="Home" />
-
     </>
   );
 };
@@ -204,7 +212,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   cardList: {
-    paddingLeft: 5, // Adicione um espaçamento à esquerda para separar os cards
+    paddingLeft: 5, 
   },
   cardContainer: {
     marginHorizontal: 10,
@@ -244,13 +252,13 @@ const styles = StyleSheet.create({
     backgroundColor: "none",
   },
   selectedButtonText: {
-    color: "#141414", // Texto branco para o botão selecionado
+    color: "#141414", 
   },
 
   longcardlist: {
-      alignItems: "center",
-      justifyContent: "center",
-  }
+    alignItems: "center",
+    justifyContent: "center",
+  },
 });
 
 export default Home;
