@@ -119,7 +119,6 @@ export default function CartPage({ navigation }) {
         </TouchableOpacity>
       </View>
 
-      <Footer navigation={navigation} currentPage="Cart" />
     </>
   );
 }

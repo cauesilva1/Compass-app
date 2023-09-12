@@ -9,11 +9,10 @@ import {
   TouchableOpacity,
   ScrollView,
 } from "react-native";
-import Footer from "../components/footer"; // Importe o componente FooterHeader
 import MediuCard from "../components/mediuCard";
 
 import LongCard from "../components/longCard";
-import { useRoute } from "@react-navigation/native";
+
 
 const Home = ({ navigation }) => {
 
@@ -29,6 +28,9 @@ const Home = ({ navigation }) => {
 
   const [data, setData] = useState<Item[]>([]); 
 
+  const [dataMostPopular, setDataMostPopular] = useState([]);
+  const [dataItems, setDataItems] = useState([]);
+
 
   const [selectedCategory, setSelectedCategory] = useState("All");
 
@@ -41,9 +43,10 @@ const Home = ({ navigation }) => {
         );
         if (response.status === 200) {
           const responseData = await response.json();
-          const items = responseData.body.data.items;
-          if (Array.isArray(items)) {
-            setData(items);
+          const { mostPopular, items } = responseData.body.data; // Desestruturação dos arrays
+          if (Array.isArray(mostPopular) && Array.isArray(items)) {
+            setDataMostPopular(mostPopular); 
+            setDataItems(items); 
           } else {
             console.error("Os dados da API não estão no formato esperado.");
           }
@@ -84,7 +87,7 @@ const Home = ({ navigation }) => {
           <FlatList
             horizontal
             showsHorizontalScrollIndicator={false}
-            data={data}
+            data={dataMostPopular}
             keyExtractor={(item) => item.id.toString()}
             contentContainerStyle={styles.cardList}
             renderItem={({ item }) => (
@@ -163,7 +166,7 @@ const Home = ({ navigation }) => {
         </View>
 
         <View style={styles.longcardlist}>
-          {data
+          {dataItems 
             .filter((item) =>
               selectedCategory === "All"
                 ? true
@@ -191,8 +194,6 @@ const Home = ({ navigation }) => {
             ))}
         </View>
       </ScrollView>
-
-      <Footer navigation={navigation} currentPage="Home" />
     </>
   );
 };

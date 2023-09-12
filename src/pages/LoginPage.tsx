@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   TouchableOpacity,
   StyleSheet,
@@ -11,10 +11,14 @@ import ButtonComponent from "../components/button";
 import {signInWithEmailAndPassword } from "firebase/auth";
 import {auth} from "../../FirebaseConfig/config";
 import Toast from 'react-native-toast-message';
+import { UserContext } from "../context/UserLogin";
 
-export default function LoginPage({ navigation }: { navigation: any }) {
+
+export default function LoginPage({navigation}: {navigation: any}) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  
+  const {login} = useContext(UserContext);
 
   const showToast = () => {
     Toast.show({
@@ -43,15 +47,16 @@ export default function LoginPage({ navigation }: { navigation: any }) {
       keyboardOffset: 10, 
     });
   }
+  
 
   async function Login() {
+    
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
-      console.log("Usuário logado");
       showToast();
-
       setTimeout(() => {
+        login(email, password);
         navigation.navigate("Home", { user: user.uid });
       }, 1500);
     } catch (error) {
@@ -77,12 +82,14 @@ export default function LoginPage({ navigation }: { navigation: any }) {
         </View>
 
         <View style={styles.HeaderButtons}>
+          <Text style={styles.textlogin}>Email:</Text>
           <TextInput
             style={styles.TextInput}
             onChangeText={(email) => setEmail(email)}
             placeholder="Digite seu email..."
           />
 
+        <Text style={styles.textlogin}>Senha:</Text>
           <TextInput
             style={styles.TextInput}
             onChangeText={(password) => setPassword(password)}
@@ -148,4 +155,10 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     marginTop: 10,
   },
+  textlogin:{
+    fontSize: 14,
+    display: "flex",
+    width: "70%",
+    alignItems: "flex-start",
+  }
 });

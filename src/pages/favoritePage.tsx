@@ -1,6 +1,5 @@
 import React from "react";
 import { View, Text, StyleSheet, SafeAreaView, ScrollView } from "react-native";
-import Footer from "../components/footer";
 
 import StickCard from "../components/stickCard";
 import { useFavorite } from "../context/favorite";
@@ -46,7 +45,9 @@ export default function FavoritePage({ navigation }) {
       </View>
     </ScrollView>
     
-    <Footer navigation={navigation} currentPage="Favorite" /></>
+    
+    
+    </>
   );
 }
 

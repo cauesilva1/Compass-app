@@ -16,7 +16,7 @@ const StickCard = ({id, imageSource, title, value, isFavorite }) => {
 
   return ( 
     <View style={styles.container}>
-      <Image source={imageSource} style={styles.image} />
+      <Image source={{ uri: imageSource }} style={styles.image} />
 
       <View style={styles.textContainer}>
         <Text style={styles.title}>{title}</Text>

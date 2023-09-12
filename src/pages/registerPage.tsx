@@ -10,16 +10,54 @@ import {
 import ButtonComponent from "../components/button";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import {auth} from "../../FirebaseConfig/config";
+import Toast from "react-native-toast-message";
 
 export default function RegisterPage({ navigation }: { navigation: any }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
 
-    async function Register() {
-      console.log('email: ' + email);
-      console.log('password: ' + password);
-    
+  const showToastError = () => {
+    Toast.show({
+      type: 'error', 
+      text1: 'Olá 👋',
+      text2: 'As senhas não são iguais',
+      position: 'top',  
+      visibilityTime: 1000, 
+      autoHide: true, 
+      topOffset: 10, 
+      bottomOffset: 40, 
+      keyboardOffset: 10, 
+    });
+  }
+
+  const showToastErrorPasswordLength = () => {
+    Toast.show({
+      type: 'error', 
+      text1: 'Olá 👋',
+      text2: 'a senha tem menos de 6 digitos',
+      position: 'top',  
+      visibilityTime: 1000, 
+      autoHide: true, 
+      topOffset: 10, 
+      bottomOffset: 40, 
+      keyboardOffset: 10, 
+    });
+  }
+
+  async function Register() {
+    console.log('email: ' + email);
+    console.log('password: ' + password);
+    console.log('confirmPassword: ' + confirmPassword);
+  
+    if (password !== confirmPassword) {
+      showToastError();
+      return;
+    } else if (password.length < 6) {
+      showToastErrorPasswordLength();
+      return;
+    } else {
       try {
         console.log("chegou aqui");
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
@@ -28,11 +66,10 @@ export default function RegisterPage({ navigation }: { navigation: any }) {
         navigation.navigate("LoginPage");
       } catch (error) {
         console.error("Erro no createUserWithEmailAndPassword:", error);
-        // Trate o erro conforme necessário
       }
-    
-    
+    }
   }
+  
 
   return (
     <ImageBackground
@@ -46,12 +83,14 @@ export default function RegisterPage({ navigation }: { navigation: any }) {
         </View>
 
         <View style={styles.HeaderButtons}>
+        <Text style={styles.textlogin}>Email:</Text>
           <TextInput
             style={styles.TextInput}
             onChangeText={(email) => setEmail(email)}
             placeholder="Digite um email..."
           />
 
+<Text style={styles.textlogin}>Senha:</Text>
           <TextInput
             style={styles.TextInput}
             onChangeText={(password) => setPassword(password)}
@@ -59,8 +98,10 @@ export default function RegisterPage({ navigation }: { navigation: any }) {
             placeholder="Digite uma senha..."
           />
 
+<Text style={styles.textlogin}>Confirme sua senha:</Text>  
           <TextInput
             style={styles.TextInput}
+            onChangeText={(confirmPassword) => setConfirmPassword(confirmPassword)}
             secureTextEntry
             placeholder="Confirme sua senha ..."
           />
@@ -76,6 +117,8 @@ export default function RegisterPage({ navigation }: { navigation: any }) {
           </TouchableOpacity>
         </View>
       </View>
+
+      <Toast />
     </ImageBackground>
   );
 }
@@ -123,4 +166,10 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     marginTop: 10,
   },
+  textlogin:{
+    fontSize: 14,
+    display: "flex",
+    width: "70%",
+    alignItems: "flex-start",
+  }
 });

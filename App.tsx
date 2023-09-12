@@ -1,12 +1,10 @@
-// App.js
 import React from "react";
 import { StatusBar } from "react-native";
 import { useFonts } from "expo-font";
-import { NavigationContainer } from "@react-navigation/native";
-import StackNavigation from "./src/routes/rotas";
-import colors from "./colors/colors";
 import CartProvider from "./src/context/cart";
-import FavoriteProvider from "./src/context/favorite"
+import FavoriteProvider from "./src/context/favorite";
+import UserProvider from "./src/context/UserLogin";
+import AppNavigator from "./src/routes/rotas";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -20,19 +18,20 @@ export default function App() {
   return (
     <>
       <StatusBar />
-
-      <CartProvider>
-        
       <FavoriteProvider>
 
-        <NavigationContainer>
-          <StackNavigation />
-        </NavigationContainer>
+        <CartProvider>
+
+          <UserProvider>
+
+              <AppNavigator />
+
+
+          </UserProvider>
+
+        </CartProvider>
 
       </FavoriteProvider>
-
-      </CartProvider>
-
     </>
   );
 }

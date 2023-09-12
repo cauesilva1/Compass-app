@@ -28,7 +28,7 @@ const CardCart = ({ imageSource, title, value, quantity, onremove, id,  }) => {
 
   return (
     <View style={styles.container}>
-      <Image source={imageSource} style={styles.image} />
+      <Image source={{ uri: imageSource }} style={styles.image} />
 
       <View style={styles.textContainer}>
         <Text style={styles.title}>{title}</Text>

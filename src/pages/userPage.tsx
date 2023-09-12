@@ -1,13 +1,13 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
 import ButtonComponent from '../components/button';
 import Toast from 'react-native-toast-message';
 
+
+
 const UserProfile = ({ navigation }) => {
-  // Suponhamos que você tenha essas informações do usuário
-  const userName = 'zezinho';
-  const userEmail = 'zezinho@email.com';
+  const userName = 'John';
+
 
   const showToastLogout = () => {
     Toast.show({
@@ -46,15 +46,7 @@ const UserProfile = ({ navigation }) => {
       <View style={styles.userInfo}>
         <Text style={styles.userName}>{userName}</Text>
         <View style={styles.separator}></View>
-
-        <View  style={styles.email}>
-
-        <Text style={styles.emailUser}>Email: </Text>
-        <Text style={styles.userEmail}>{userEmail}</Text>
-
-        </View>
         
-
       </View>
 
     <View style={styles.buttoncentralize}> 
@@ -113,18 +105,6 @@ const styles = StyleSheet.create({
   userEmail: {
     fontSize: 16,
   },
-  email: {
-    padding: 5,
-    marginTop: 5,
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    justifyContent: 'space-between',
-    width: "100%",
-  },
-
-  emailUser: {
-    fontSize: 16,
-  },
   button: {
     width: "80%",
     alignItems: 'center',
@@ -138,7 +118,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: 20,
   }
-  // Adicione estilos adicionais conforme necessário
 });
 
 export default UserProfile;
