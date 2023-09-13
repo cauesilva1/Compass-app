@@ -18,6 +18,7 @@ export default function App() {
   return (
     <>
       <StatusBar />
+
       <FavoriteProvider>
 
         <CartProvider>
@@ -32,6 +33,7 @@ export default function App() {
         </CartProvider>
 
       </FavoriteProvider>
+      
     </>
   );
 }

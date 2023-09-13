@@ -39,7 +39,7 @@ function AuthenticatedNavigator() {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
-        tabBarActiveTintColor: "green", 
+        tabBarActiveTintColor: "#418B64", 
         tabBarInactiveTintColor: "black", 
         tabBarStyle: [
           {

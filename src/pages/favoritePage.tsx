@@ -17,7 +17,7 @@ export interface FavoriteItems {
 
 export default function FavoritePage({ navigation }) {
 
-  const {favoriteItems, addFavorite, deletefavorite} = useFavorite();
+  const {favoriteItems, addFavorite, deletefavorite} = useFavorite(); 
 
   return (
     <>

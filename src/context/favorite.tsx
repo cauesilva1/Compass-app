@@ -19,6 +19,7 @@ export const useFavorite = () => {
 }
 
 const FavoriteProvider = ({ children }: { children: React.ReactNode }) => {
+    
     const [favoriteItems, setFavoriteItems] = useState<FavoriteItems[]>([]);
 
     const addFavorite = (item: any) => {
